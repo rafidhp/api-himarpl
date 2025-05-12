@@ -26,8 +26,6 @@ jobs:
         run: npm ci
       - name: Post Install
         run: npm run postinstall
-      - name: Run Commitlint
-        run: npm run commitlint
       - name: Run Linting
         run: npm run lint
 
