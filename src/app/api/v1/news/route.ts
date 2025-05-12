@@ -88,70 +88,94 @@ export async function GET(request: NextRequest) {
     // Calculate skip for pagination
     const skip = (page - 1) * limit;
 
-    const posts = await db.post.findMany({
-      where: {
-        PostToPostTag: {
-          some: {
-            post_tags: {
-              title: "berita",
+    const [posts, total] = await Promise.all([
+      db.post.findMany({
+        where: {
+          PostToPostTag: {
+            some: {
+              post_tags: {
+                title: "berita",
+              },
+            },
+          },
+          title: {
+            contains: search,
+          },
+          publishedAt: {
+            not: null,
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+          metaTitle: true,
+          slug: true,
+          content: true,
+          image: true,
+          publishedAt: true,
+          createdAt: true,
+          updatedAt: true,
+          author: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
+          PostToPostTag: {
+            select: {
+              post_tags: {
+                select: {
+                  title: true,
+                  slug: true,
+                },
+              },
             },
           },
         },
-        title: {
-          contains: search,
+        orderBy: {
+          publishedAt: order,
         },
-        publishedAt: {
-          not: null,
-        },
-      },
-      select: {
-        id: true,
-        title: true,
-        metaTitle: true,
-        slug: true,
-        content: true,
-        image: true,
-        publishedAt: true,
-        createdAt: true,
-        updatedAt: true,
-        author: {
-          select: {
-            id: true,
-            name: true,
-            image: true,
-          },
-        },
-      },
-      orderBy: {
-        publishedAt: order,
-      },
-      skip,
-      take: limit,
-    });
-    const total = await db.post.count({
-      where: {
-        PostToPostTag: {
-          some: {
-            post_tags: {
-              title: "berita",
+        skip,
+        take: limit,
+      }),
+      db.post.count({
+        where: {
+          PostToPostTag: {
+            some: {
+              post_tags: {
+                title: "berita",
+              },
             },
           },
+          title: {
+            contains: search,
+          },
+          publishedAt: {
+            not: null,
+          },
         },
-        title: {
-          contains: search,
-        },
-        publishedAt: {
-          not: null,
-        },
-      },
-    });
+      }),
+    ]);
 
     // Calculate total pages
     const totalPages = Math.ceil(total / limit);
 
+    // Mapped the PostToPostTag to postTags
+    const mappedPosts = posts.map((post) => {
+      const postTags = post.PostToPostTag.map((postTag) => postTag.post_tags);
+
+      // @ts-expect-error - delete PostToPostTag
+      delete post.PostToPostTag;
+      return {
+        ...post,
+        postTags,
+      };
+    });
+
     return new Response(
       JSON.stringify({
-        data: posts,
+        data: mappedPosts,
         timestamp: new Date().toISOString(),
         code: "SUCCESS",
         metadata: {

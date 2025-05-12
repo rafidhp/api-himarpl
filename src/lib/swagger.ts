@@ -46,6 +46,20 @@ export const getApiDocs = async () => {
                 type: "string",
                 format: "date-time",
               },
+              postTags: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    title: {
+                      type: "string",
+                    },
+                    slug: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
               author: {
                 type: "object",
                 properties: {
