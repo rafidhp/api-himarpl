@@ -26,7 +26,7 @@ import { ratelimit } from "@/server/ratelimit";
  *           type: integer
  *           minimum: 1
  *           maximum: 50
- *           default: 10
+ *           default: 1
  *         description: Number of items per page
  *       - in: query
  *         name: order
@@ -43,8 +43,6 @@ import { ratelimit } from "@/server/ratelimit";
  *     responses:
  *       200:
  *         $ref: '#/components/responses/NewsResponse'
- *       400:
- *         $ref: '#/components/responses/BadRequest'
  *       500:
  *         $ref: '#/components/responses/InternalError'
  */
