@@ -76,6 +76,123 @@ export const getApiDocs = async () => {
               },
             },
           },
+          User: {
+            type: "object",
+            properties: {
+              id: {
+                type: "string",
+              },
+              name: {
+                type: "string",
+              },
+              email: {
+                type: "string",
+                nullable: true,
+                example: "example@domain.com",
+              },
+              username: {
+                type: "string",
+                nullable: true,
+              },
+              image: {
+                type: "string",
+                nullable: true,
+                format: "url",
+              },
+              bio: {
+                type: "string",
+                nullable: true,
+              },
+              departments: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                    },
+                    name: {
+                      type: "string",
+                    },
+                    acronym: {
+                      type: "string",
+                    },
+                    periodYear: {
+                      type: "integer",
+                      example: 2024,
+                    },
+                    image: {
+                      type: "string",
+                      format: "url",
+                    },
+                  },
+                },
+              },
+              periods: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                    },
+                    year: {
+                      type: "integer",
+                      example: 2024,
+                    },
+                    name: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
+              positions: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                    },
+                    name: {
+                      type: "string",
+                    },
+                    departmentId: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          PaginationMetadata: {
+            type: "object",
+            properties: {
+              total: {
+                type: "integer",
+              },
+              page: {
+                type: "integer",
+              },
+              limit: {
+                type: "integer",
+              },
+              totalPages: {
+                type: "integer",
+              },
+            },
+          },
+          RateLimitMetadata: {
+            type: "object",
+            properties: {
+              resetIn: {
+                example: 1625210000,
+                description: "Unix timestamp when the rate limit resets",
+                type: "integer",
+                format: "int64",
+              },
+            },
+          },
         },
         responses: {
           NewsResponse: {
@@ -104,21 +221,41 @@ export const getApiDocs = async () => {
                       example: "SUCCESS",
                     },
                     metadata: {
-                      type: "object",
-                      properties: {
-                        total: {
-                          type: "integer",
-                        },
-                        page: {
-                          type: "integer",
-                        },
-                        limit: {
-                          type: "integer",
-                        },
-                        totalPages: {
-                          type: "integer",
-                        },
+                      $ref: "#/components/schemas/PaginationMetadata",
+                      description: "Additional response metadata",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          UsersResponse: {
+            description: "Successful response",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["data", "code", "timestamp"],
+                  properties: {
+                    data: {
+                      type: "array",
+                      items: {
+                        $ref: "#/components/schemas/User",
                       },
+                      description: "Array of users",
+                    },
+                    timestamp: {
+                      type: "string",
+                      format: "date-time",
+                      description: "Time when the response was generated",
+                    },
+                    code: {
+                      type: "string",
+                      description: "Response code",
+                      example: "SUCCESS",
+                    },
+                    metadata: {
+                      $ref: "#/components/schemas/PaginationMetadata",
                       description: "Additional response metadata",
                     },
                   },
@@ -280,14 +417,7 @@ export const getApiDocs = async () => {
                       description: "Time when the error occurred",
                     },
                     metadata: {
-                      type: "object",
-                      description: "Additional rate limiting details",
-                      properties: {
-                        retryAfter: {
-                          type: "integer",
-                          description: "Seconds until rate limit resets",
-                        },
-                      },
+                      $ref: "#/components/schemas/RateLimitMetadata",
                     },
                   },
                 },
