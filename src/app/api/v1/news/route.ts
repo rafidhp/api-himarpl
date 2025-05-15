@@ -26,7 +26,7 @@ import { ratelimit } from "@/server/ratelimit";
  *           type: integer
  *           minimum: 1
  *           maximum: 50
- *           default: 1
+ *           default: 10
  *         description: Number of items per page
  *       - in: query
  *         name: order
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
   try {
     const ip = ipAddress(request) as string;
 
-    const success = await ratelimit.limit(ip);
+    const { success, reset } = await ratelimit.limit(ip);
 
     if (!success) {
       return new Response(
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
           timestamp: new Date().toISOString(),
           code: "TOO_MANY_REQUESTS",
           metadata: {
-            message: "Too many requests",
+            resetTimestamp: reset,
           },
         }),
         {
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
     const page = Math.max(1, Number(searchParams.get("page")) ?? 1);
     const limit = Math.min(
       50,
-      Math.max(1, Number(searchParams.get("limit")) ?? 10)
+      Math.max(1, Number(searchParams.get("limit") ?? 10))
     );
     const order = (searchParams.get("order") as "asc" | "desc") ?? "desc";
     const search = searchParams.get("search") ?? "";
