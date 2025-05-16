@@ -104,7 +104,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get("type");
     const year = Number(searchParams.get("year"));
-    const acronym = searchParams.get("acronym")?.toLocaleLowerCase() ?? "";
+    const acronym = searchParams.get("acronym")?.toLowerCase() ?? "";
 
     const filters: any = {};
 
@@ -179,46 +179,6 @@ export async function GET(request: NextRequest) {
         acronym: "asc",
       },
     });
-
-    // if (!type || !["be", "dp"].includes(type.toLowerCase()) || isNaN(year)) {
-    //   return new Response(
-    //     JSON.stringify({
-    //       error: "Invalid or missing query parameters",
-    //       timestamp: new Date().toISOString(),
-    //       code: "BAD_REQUEST",
-    //       metadata: {
-    //         example: "api/v1/departments?type=be&year=2025",
-    //       },
-    //     }),
-    //     {
-    //       status: 400,
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    // }
-
-    // const departments = await db.department.findMany({
-    //   where: {
-    //     type: type.toUpperCase(),
-    //     periodYear: year,
-    //   },
-    //   select: {
-    //     id: true,
-    //     name: true,
-    //     acronym: true,
-    //     image: true,
-    //     description: true,
-    //     type: true,
-    //     periodYear: true,
-    //     createdAt: true,
-    //     updatedAt: true,
-    //   },
-    //   orderBy: {
-    //     acronym: "asc",
-    //   },
-    // });
 
     return new Response(
       JSON.stringify({
