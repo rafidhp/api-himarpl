@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <br />
+  <a href="https://www.himarpl.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/himarplupi/assets-himarpl@v1.3.5/images/logo/logo-landscape-dark.png">
+      <img src="https://cdn.jsdelivr.net/gh/himarplupi/assets-himarpl@v1.3.5/images/logo/logo-landscape-light.png" width="200px">
+    </picture>
+  </a>
+</p>
 
-## Getting Started
+<p align="center">
+  <a href="https://www.himarpl.com">himarpl.com</a> API built using Next.js with Prisma.
+</p>
 
-First, run the development server:
+<p align="center">
+  <a title="MIT License" href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" />
+  </a>
+  <a title="Vercel" href="https://vercel.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/powered%20by-Vercel%20%E2%96%B2-white">
+      <img src="https://img.jsdelivr.net/gh/himarplupi/assets-himarpl@v1.3.5/images/logo/logo-landscape-light.png" alt="Powered by Vercel">
+    </picture>
+  </a>
+  <br />
+</p>
+
+## What is this repository?
+
+This repository contains the source code for the <a href="https://www.himarpl.com">himarpl.com</a> API. It is built using <a href="https://nextjs.org">Next.js</a>, a React Framework, and Prisma for database management.
+
+## Installation
+
+Follow the installation guide in the [Contribution Guide][] to set up the project locally.
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contribution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project adopts the HIMARPL [Code of Conduct][].
+Documentation for the complete infrastructure design can be found at <a href="https://docs.himarpl.com">docs.himarpl.com</a>.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> [!NOTE]
+> We recommend reading all Relevant Links below before making code changes, including Dependency changes, Content changes, and Code changes.
 
-## Learn More
+### Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The API is automatically deployed to <a href="https://vercel.com">Vercel</a> via GitHub Actions integration when there is a new push to the `main` branch.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The current integration is owned and managed by the Website Team in the HIMARPL Kominfo Department.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Relevant Links
 
-## Deploy on Vercel
+[Code of Conduct][]
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[Contribution Guide][]
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Thank You
+
+- Thanks to all contributors and collaborators who developed this project.
+
+[code of conduct]: https://github.com/himarplupi/blog-himarpl/blob/main/CODE_OF_CONDUCT.md
+[contribution guide]: https://github.com/himarplupi/blog-himarpl/blob/main/CONTRIBUTING.md
