@@ -106,6 +106,7 @@ export async function GET(request: NextRequest) {
     const year = Number(searchParams.get("year"));
     const acronym = searchParams.get("acronym")?.toLowerCase() ?? "";
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const filters: any = {};
 
     if (type) {
@@ -196,6 +197,7 @@ export async function GET(request: NextRequest) {
         },
       }
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error fetching departments", error);
 
