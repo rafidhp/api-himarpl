@@ -67,8 +67,17 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const type = searchParams.get("type");
-    const year = Number(searchParams.get("year"));
+    const page = Math.max(1, Number(searchParams.get("page")) ?? 1);
+    const limit = Math.min(
+      50,
+      Math.max(1, Number(searchParams.get("limit") ?? 10))
+    );
+    const skip = (page - 1) * limit;
+
+    const rawType = searchParams.get("type");
+    const type = rawType ? rawType.toLowerCase() : undefined;
+    const yearParam = searchParams.get("year");
+    const year = yearParam ? Number(yearParam) : undefined;
     const acronym = searchParams.get("acronym")?.toLowerCase() ?? "";
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +86,7 @@ export async function GET(request: NextRequest) {
     if (type) {
       const validTypes = ["be", "dp"];
 
-      if (!validTypes.includes(type.toLowerCase())) {
+      if (!validTypes.includes(type)) {
         return new Response(
           JSON.stringify({
             error: "Invalid type value",
@@ -98,7 +107,7 @@ export async function GET(request: NextRequest) {
       filters.type = type.toUpperCase();
     }
 
-    if (!isNaN(year)) {
+    if (year !== undefined && !isNaN(year)) {
       filters.periodYear = year;
     }
 
@@ -108,43 +117,43 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    if (Object.keys(filters).length === 0) {
-      return new Response(
-        JSON.stringify({
-          error:
-            "Missing query parameters. Provide at least one of: type, year, or acronym",
-          timestamp: new Date().toISOString(),
-          code: "BAD_REQUEST",
-          metadata: {
-            example: "api/v1/departments?type=be&year=2025",
+    const [departments, total] = await Promise.all([
+      db.department.findMany({
+        where: filters,
+        select: {
+          id: true,
+          name: true,
+          acronym: true,
+          image: true,
+          description: true,
+          type: true,
+          periodYear: true,
+          period: {
+            select: {
+              id: true,
+              year: true,
+              name: true,
+            },
           },
-        }),
-        {
-          status: 400,
-          headers: {
-            "Content-Type": "application/json",
+          programs: {
+            select: {
+              id: true,
+              content: true,
+            },
           },
-        }
-      );
-    }
+        },
+        orderBy: {
+          acronym: "asc",
+        },
+        skip,
+        take: limit,
+      }),
+      db.department.count({
+        where: filters,
+      }),
+    ]);
 
-    const departments = await db.department.findMany({
-      where: filters,
-      select: {
-        id: true,
-        name: true,
-        acronym: true,
-        image: true,
-        description: true,
-        type: true,
-        periodYear: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-      orderBy: {
-        acronym: "asc",
-      },
-    });
+    const totalPages = Math.ceil(total / limit);
 
     return new Response(
       JSON.stringify({
@@ -152,7 +161,10 @@ export async function GET(request: NextRequest) {
         timestamp: new Date().toISOString(),
         code: "SUCCESS",
         metadata: {
-          count: departments.length,
+          total,
+          page,
+          limit,
+          totalPages,
         },
       }),
       {
@@ -162,6 +174,7 @@ export async function GET(request: NextRequest) {
         },
       }
     );
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error fetching departments", error);
