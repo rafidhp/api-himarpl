@@ -165,6 +165,69 @@ export const getApiDocs = async () => {
               },
             },
           },
+          Department: {
+            type: "object",
+            properties: {
+              id: {
+                type: "string",
+              },
+              name: {
+                type: "string",
+              },
+              acronym: {
+                type: "string",
+              },
+              periodYear: {
+                type: "integer",
+                example: 2024,
+              },
+              image: {
+                type: "string",
+                nullable: true,
+                format: "url",
+              },
+              description: {
+                type: "string",
+                nullable: true,
+              },
+              type: {
+                type: "string",
+                example: "BE",
+              },
+              periods: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                    },
+                    year: {
+                      type: "integer",
+                      example: 2024,
+                    },
+                    name: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
+              programs: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                    },
+                    content: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
+            },
+          },
           PaginationMetadata: {
             type: "object",
             properties: {
@@ -245,6 +308,40 @@ export const getApiDocs = async () => {
                       description: "Array of users",
                     },
                     timestamp: {
+                      type: "string",
+                      format: "date-time",
+                      description: "Time when the response was generated",
+                    },
+                    code: {
+                      type: "string",
+                      description: "Response code",
+                      example: "SUCCESS",
+                    },
+                    metadata: {
+                      $ref: "#/components/schemas/PaginationMetadata",
+                      description: "Additional response metadata",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          DepartmentsResponse: {
+            description: "Successful response",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["data", "code", "timestamp"],
+                  properties: {
+                    data: {
+                      type: "array",
+                      items: {
+                        $ref: "#/components/schemas/Department",
+                      },
+                      description: "Array of departments",
+                    },
+                    timestramp: {
                       type: "string",
                       format: "date-time",
                       description: "Time when the response was generated",

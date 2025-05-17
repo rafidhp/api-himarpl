@@ -18,8 +18,8 @@ import { ratelimit } from "@/server/ratelimit";
  *         required: false
  *         schema:
  *           type: string
- *           example: be
- *         description: Type of department (be = backend, dp = departemen)
+ *           enum: [be, dp]
+ *         description: Type of department (be = Badan Eksekutif, dp = Dewan Perwakilan)
  *       - in: query
  *         name: year
  *         required: false
@@ -36,44 +36,9 @@ import { ratelimit } from "@/server/ratelimit";
  *         description: Acronym of the department (optional)
  *     responses:
  *       200:
- *         description: Successful response
- *         content:
- *           application/json:
- *             example:
- *               data:
- *                 - id: "clw123abc456"
- *                   name: "Departemen Komunikasi dan Informasi"
- *                   acronym: "KOMINFO"
- *                   image: "https://example.com/image.jpg"
- *                   description: "Mengelola komunikasi internal & eksternal"
- *                   type: "DP"
- *                   periodYear: 2025
- *                   createdAt: "2025-01-01T12:00:00.000Z"
- *                   updatedAt: "2025-05-16T10:00:00.000Z"
- *               timestamp: "2025-05-16T16:40:52.498Z"
- *               code: "SUCCESS"
- *               metadata:
- *                 count: 1
- *       400:
- *         description: Bad request (invalid or missing query)
- *         content:
- *           application/json:
- *             example:
- *               error: "Invalid type value"
- *               timestamp: "2025-05-16T16:40:52.498Z"
- *               code: "BAD_REQUEST"
- *               metadata:
- *                 allowedTypes: [be, dp]
+ *         $ref: '#/components/responses/DepartmentsResponse'
  *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             example:
- *               error: "Internal server error"
- *               timestamp: "2025-05-16T16:40:52.498Z"
- *               code: "INTERNAL_ERROR"
- *               metadata:
- *                 message: "Error message here"
+ *         $ref: '#/components/responses/InternalError'
  */
 
 export async function GET(request: NextRequest) {
