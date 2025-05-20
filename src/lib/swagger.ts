@@ -192,7 +192,7 @@ export const getApiDocs = async () => {
                 type: "string",
                 example: "BE",
               },
-              periods: {
+              period: {
                 type: "array",
                 items: {
                   type: "object",
@@ -339,7 +339,7 @@ export const getApiDocs = async () => {
                       },
                       description: "Array of departments",
                     },
-                    timestramp: {
+                    timestamp: {
                       type: "string",
                       format: "date-time",
                       description: "Time when the response was generated",
