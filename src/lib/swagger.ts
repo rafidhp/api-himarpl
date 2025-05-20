@@ -69,6 +69,9 @@ export const getApiDocs = async () => {
                   name: {
                     type: "string",
                   },
+                  username: {
+                    type: "string",
+                  },
                   image: {
                     type: "string",
                   },
@@ -84,11 +87,6 @@ export const getApiDocs = async () => {
               },
               name: {
                 type: "string",
-              },
-              email: {
-                type: "string",
-                nullable: true,
-                example: "example@domain.com",
               },
               username: {
                 type: "string",

@@ -33,7 +33,7 @@ import { parseCommaSeparatedString, toIntEachItems } from "@/lib/utils";
  *         name: orderBy
  *         schema:
  *           type: string
- *           enum: [name, email, username]
+ *           enum: [name, username]
  *           default: name
  *         description: Field to sort by
  *       - in: query
@@ -172,7 +172,6 @@ export async function GET(request: NextRequest) {
         select: {
           id: true,
           name: true,
-          email: true,
           username: true,
           image: true,
           bio: true,
