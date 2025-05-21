@@ -17,5 +17,5 @@ export function middleware() {
 }
 
 export const config = {
-  matcher: ["/api/:path*"], // Terapkan hanya ke API routes
+  matcher: ["/api/:path*"],
 };
