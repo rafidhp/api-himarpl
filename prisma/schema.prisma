@@ -78,7 +78,6 @@ model Department {
   programs    Program[]
   users       User[]     @relation("DepartmentToUser")
 
-  @@unique([type, acronym])
   @@map("departments")
 }
 
