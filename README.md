@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.himarpl.com">himarpl.com</a> API built using Next.js with Prisma.
+  <a href="https://www.himarpl.org">himarpl.org</a> API built using Next.js with Prisma.
 </p>
 
 <p align="center">
@@ -27,7 +27,7 @@
 
 ## What is this repository?
 
-This repository contains the source code for the <a href="https://www.himarpl.com">himarpl.com</a> API. It is built using <a href="https://nextjs.org">Next.js</a>, a React Framework, and Prisma for database management.
+This repository contains the source code for the <a href="https://www.himarpl.org">himarpl.org</a> API. It is built using <a href="https://nextjs.org">Next.js</a>, a React Framework, and Prisma for database management.
 
 ## Installation
 
