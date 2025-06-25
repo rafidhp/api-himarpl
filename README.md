@@ -1,6 +1,6 @@
 <p align="center">
   <br />
-  <a href="https://www.himarpl.com">
+  <a href="https://www.himarpl.org">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/himarplupi/assets-himarpl@v1.3.5/images/logo/logo-landscape-dark.png">
       <img src="https://cdn.jsdelivr.net/gh/himarplupi/assets-himarpl@v1.3.5/images/logo/logo-landscape-light.png" width="200px">
